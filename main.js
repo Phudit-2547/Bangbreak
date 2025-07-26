@@ -29,7 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
       formatted = value.substring(0, 2) + ":" + value.substring(2);
     } else {
       // Show HH:MM:SS
-      formatted = value.substring(0, 2) + ":" + value.substring(2, 4) + ":" + value.substring(4);
+      formatted =
+        value.substring(0, 2) +
+        ":" +
+        value.substring(2, 4) +
+        ":" +
+        value.substring(4);
     }
 
     e.target.value = formatted;
@@ -52,7 +57,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Format as HH:MM:SS
-    const formatted = value.substring(0, 2) + ":" + value.substring(2, 4) + ":" + value.substring(4, 6);
+    const formatted =
+      value.substring(0, 2) +
+      ":" +
+      value.substring(2, 4) +
+      ":" +
+      value.substring(4, 6);
     e.target.value = formatted;
   });
 });
@@ -64,7 +74,7 @@ function timeToSeconds(timeString) {
   const minutes = parseInt(parts[1], 10) || 0;
   const seconds = parseInt(parts[2], 10) || 0;
 
-  return (hours * 3600) + (minutes * 60) + seconds;
+  return hours * 3600 + minutes * 60 + seconds;
 }
 
 let startBtn = document.getElementById("startBtn");
@@ -73,7 +83,7 @@ let cancelBtn = document.getElementById("cancelBtn");
 startBtn.addEventListener("click", () => {
   const timerString = document.getElementById("timer").value;
   const timer = timeToSeconds(timerString);
-  console.log(timer)
+  console.log(timer);
 
   // Validate timer is greater than 0
   if (timer <= 0) {
@@ -92,11 +102,31 @@ startBtn.addEventListener("click", () => {
     action,
     customUrl,
     color,
-    enableAnimation
+    enableAnimation,
   });
 
   toggleButtons(true);
 });
+
+//reo add
+function toggleUrlInput() {
+  const actionSelect = document.getElementById("action");
+  const urlInput = document.getElementById("customUrl");
+  const colorSection = document.getElementById("color-section");
+
+  if (actionSelect.value === "custom") {
+    urlInput.style.display = "block";
+    colorSection.style.display = "none";
+  } else {
+    urlInput.style.display = "none";
+    colorSection.style.display = "block";
+  }
+}
+
+// Add this inside your existing DOMContentLoaded event listener
+// (Add these lines after your existing code in the DOMContentLoaded section)
+document.getElementById("action").addEventListener("change", toggleUrlInput);
+toggleUrlInput();
 
 cancelBtn.addEventListener("click", () => {
   chrome.runtime.sendMessage({ command: "cancel" });

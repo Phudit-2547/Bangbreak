@@ -1,82 +1,120 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div id="header-container" class="header-section">
+      <div id="title-name" class="title-wrapper">
+        <h3>BangBreak</h3>
+      </div>
+      <div id="auto-toggle-container" class="auto-toggle-wrapper">
+        <span>Auto Bang</span>
+        <label>
+          <input type="checkbox" id="enableAuto" />
+          <span></span>
+        </label>
+      </div>
+    </div>
 
-<head>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 10px;
-      width: 220px;
-    }
+    <div id="timer-section" class="timer-container">
+      <label>Set Timer:</label>
+      <div id="timer-buttons" class="timer-button-group">
+        <input type="button" value="-5" class="timer-btn" />
+        <input type="button" value="-1" class="timer-btn" />
+        <input type="button" value="+1" class="timer-btn" />
+        <input type="button" value="+5" class="timer-btn" />
+      </div>
 
-    .preset-container {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+      <div id="timer-input-container" class="timer-input-wrapper">
+        <input
+          type="text"
+          id="timer"
+          value="00:00:05"
+          pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}"
+          placeholder="00:00:05"
+          maxlength="8"
+          class="timer-display"
+        />
+        <div id="timer-increment-buttons" class="timer-increment-group">
+          <input type="button" value="+" class="timer-increment-btn" />
+          <input type="button" value="-" class="timer-increment-btn" />
+        </div>
+      </div>
+    </div>
 
-    .preset {
-      width: 40px;
-      height: 40px;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-    }
+    <div id="action-section" class="action-container">
+      <label>Action:</label>
+      <select id="action" class="action-select">
+        <option value="blank">Blank Page</option>
+        <option value="custom">Redirect to URL</option>
+      </select>
+    </div>
 
-    input,
-    button {
-      width: 50%;
-      margin-top: 5px;
-      height: 20px;
-    }
+    <div id="color-section" class="color-container">
+      <div id="color-header" class="color-header-wrapper">
+        <label>Pick Bang Color:</label>
+        <div id="extra-care-container" class="extra-care-wrapper">
+          <label>
+            <input type="checkbox" id="enableAnimation" checked />
+            Extra care
+          </label>
+        </div>
+      </div>
 
-    #timer {
-      font-family: monospace;
-      text-align: center;
-      font-size: 14px;
-      letter-spacing: 1px;
-    }
+      <div class="preset-container" id="color-presets">
+        <button
+          class="preset"
+          style="background-color: red"
+          data-color="#ff0000"
+        ></button>
+        <button
+          class="preset"
+          style="background-color: green"
+          data-color="#00ff00"
+        ></button>
+        <button
+          class="preset"
+          style="background-color: blue"
+          data-color="#0000ff"
+        ></button>
+        <button
+          class="preset"
+          style="background-color: yellow"
+          data-color="#ffff00"
+        ></button>
+      </div>
+      <div id="color-picker-container" class="color-picker-wrapper">
+        <input
+          type="color"
+          id="colorPicker"
+          class="color-picker-input"
+          value="#FFFFFF"
+        />
+      </div>
+    </div>
 
-    #timer:focus {
-      outline: 2px solid #007cba;
-      border-radius: 2px;
-    }
-  </style>
-</head>
+    <div id="url-section" class="url-container">
+      <input
+        type="url"
+        id="customUrl"
+        placeholder="https://example.com"
+        class="url-input"
+        style="display: none"
+      />
+    </div>
 
-<body>
-  <h3>BangBreak</h3>
-  <label>Time (HH:MM:SS):</label>
-  <input type="text" id="timer" value="00:00:05" pattern="[0-9]{2}:[0-9]{2}:[0-9]{2}" placeholder="00:00:05"
-    maxlength="8" />
-  <label>Action:</label>
-  <select id="action">
-    <option value="blank">Blank Page</option>
-    <option value="custom">Redirect to URL</option>
-  </select>
+    <div id="control-buttons" class="button-container">
+      <button id="startBtn" class="control-btn start-btn">Start Timer</button>
+      <button
+        id="cancelBtn"
+        class="control-btn cancel-btn"
+        style="display: none"
+      >
+        Cancel Timer
+      </button>
+    </div>
 
-  <label>Color for eye:</label>
-  <div class="preset-container">
-    <button class="preset" style="background-color: red" data-color="#ff0000"></button>
-    <button class="preset" style="background-color: green" data-color="#00ff00"></button>
-    <button class="preset" style="background-color: blue" data-color="#0000ff"></button>
-    <button class="preset" style="background-color: yellow" data-color="#ffff00"></button>
-  </div>
-  <input type="color" id="colorPicker" />
-
-  <div>
-    <label>
-      <input type="checkbox" id="enableAnimation" checked>
-      Extra care
-    </label>
-  </div>
-
-  <input type="url" id="customUrl" placeholder="https://example.com" style="display:none;" />
-
-  <button id="startBtn">Start Timer</button>
-  <button id="cancelBtn" style="display: none">Cancel Timer</button>
-
-  <script src="main.js"></script>
-</body>
-
+    <script src="main.js"></script>
+  </body>
 </html>

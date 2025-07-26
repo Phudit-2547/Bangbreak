@@ -16,13 +16,13 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         action,
         customUrl,
         color,
-        enableAnimation
+        enableAnimation,
       });
 
       // Use Chrome alarms API for timers longer than 1 minute (Chrome limitation)
       if (timer >= 60) {
         chrome.alarms.create("bangbreakTimer", {
-          delayInMinutes: timer / 60 // Convert seconds to minutes
+          delayInMinutes: timer / 60, // Convert seconds to minutes
         });
       } else {
         // Use setTimeout for short timers (under 1 minute)
@@ -44,10 +44,9 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
-
 chrome.runtime.onStartup.addListener(() => {
   chrome.alarms.create("bangbreakTimerAuto", {
-    delayInMinutes: 1 // Minutes
+    delayInMinutes: 1, // Minutes
   });
 });
 
@@ -64,63 +63,77 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
-var timeoutId = null
+var timeoutId = null;
 
 // Common function to execute when timer expires
 function executeTimer() {
-  chrome.storage.local.get(['action', 'customUrl', 'color', 'enableAnimation'], (data) => {
-    const { action, customUrl, color, enableAnimation } = data;
+  chrome.storage.local.get(
+    ["action", "customUrl", "color", "enableAnimation"],
+    (data) => {
+      const { action, customUrl, color, enableAnimation } = data;
 
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-      if (!tab || !tab.id) return;
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const tab = tabs[0];
+        if (!tab || !tab.id) return;
 
-      if (action === "blank") {
-        const whiteUrl = chrome.runtime.getURL("white.html") + `?color=${encodeURIComponent(color || "#ffffff")}&animation=${enableAnimation}`;
-        chrome.tabs.update(tab.id, { url: whiteUrl });
-      } else if (action === "custom" && customUrl) {
-        chrome.tabs.update(tab.id, { url: customUrl });
-      }
+        if (action === "blank") {
+          const whiteUrl =
+            chrome.runtime.getURL("white.html") +
+            `?color=${encodeURIComponent(
+              color || "#ffffff"
+            )}&animation=${enableAnimation}`;
+          chrome.tabs.update(tab.id, { url: whiteUrl });
+        } else if (action === "custom" && customUrl) {
+          chrome.tabs.update(tab.id, { url: customUrl });
+        }
 
-      chrome.windows.getAll({}, function (windows) {
-        windows.forEach(function (window) {
-          if (window.state == "fullscreen") {
-            chrome.windows.update(window.id, { state: "fullscreen" });
-          }
+        chrome.windows.getAll({}, function (windows) {
+          windows.forEach(function (window) {
+            if (window.state != "fullscreen") {
+              chrome.windows.update(window.id, { state: "fullscreen" });
+            }
+          });
         });
       });
-    });
 
-    chrome.storage.local.set({ isRunning: false });
-  });
+      chrome.storage.local.set({ isRunning: false });
+    }
+  );
 }
 
 function executeTimerAuto() {
-  chrome.storage.local.get(['action', 'customUrl', 'color', 'enableAnimation'], (data) => {
-    const { action, customUrl, color, enableAnimation } = data;
+  chrome.storage.local.get(
+    ["action", "customUrl", "color", "enableAnimation"],
+    (data) => {
+      const { action, customUrl, color, enableAnimation } = data;
 
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-      if (!tab || !tab.id) return;
+      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        const tab = tabs[0];
+        if (!tab || !tab.id) return;
 
-      if (action === "blank") {
-        const whiteUrl = chrome.runtime.getURL("white.html") + `?color=${encodeURIComponent(color || "#ffffff")}&animation=${enableAnimation}`;
-        chrome.tabs.update(tab.id, { url: whiteUrl });
-      } else if (action === "custom" && customUrl) {
-        chrome.tabs.update(tab.id, { url: customUrl });
-      }
+        if (action === "blank") {
+          const whiteUrl =
+            chrome.runtime.getURL("white.html") +
+            `?color=${encodeURIComponent(
+              color || "#ffffff"
+            )}&animation=${enableAnimation}`;
+          chrome.tabs.update(tab.id, { url: whiteUrl });
+        } else if (action === "custom" && customUrl) {
+          chrome.tabs.update(tab.id, { url: customUrl });
+        }
 
-      chrome.windows.getAll({}, function (windows) {
-        windows.forEach(function (window) {
-          if (window.state == "fullscreen") {
-            chrome.windows.update(window.id, { state: "fullscreen" });
-          }
+        chrome.windows.getAll({}, function (windows) {
+          windows.forEach(function (window) {
+            if (window.state != "fullscreen") {
+              chrome.windows.update(window.id, { state: "fullscreen" });
+            }
+          });
         });
       });
-    });
 
-    chrome.storage.local.set({ isRunning: false });
-  });
+      chrome.storage.local.set({ isRunning: false });
+    }
+  );
 }
 
 function cancel() {
@@ -129,10 +142,10 @@ function cancel() {
     clearTimeout(timeoutId);
     timeoutId = null;
   }
-  
+
   // Clear any existing alarms
   chrome.alarms.clear("bangbreakTimer");
-  
+
   // Update storage
   chrome.storage.local.set({ isRunning: false });
 }
