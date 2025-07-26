@@ -1,5 +1,10 @@
 {
   "manifest_version": 3,
   "version": "1.0",
-  "name": "Bangbreak"
+  "name": "Bangbreak",
+  "icons": {
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
+  }
 }
