@@ -21,5 +21,5 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             }
         });
     });
-    }, timer * 1000);
+    });
 });
