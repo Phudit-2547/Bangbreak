@@ -21,8 +21,7 @@ startBtn.addEventListener("click", () => {
     action,
     customUrl,
     color,
-    enableAnimation,
-    isAuto: false
+    enableAnimation
   });
 
   toggleButtons(true);
