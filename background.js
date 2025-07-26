@@ -4,7 +4,15 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.command === "start") {
     const { timer, action, customUrl, color, enableAnimation } = msg;
 
-    if (timeoutId) clearTimeout(timeoutId); // prevent overlap
+    if (timeoutId) clearTimeout(timeoutId);
+
+    // Save state
+    chrome.storage.local.set({
+      isRunning: true,
+      action,
+      customUrl,
+      color
+    });
 
     timeoutId = setTimeout(() => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -29,7 +37,8 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         });
       });
 
-      timeoutId = null; // reset after execution
+      timeoutId = null;
+      chrome.storage.local.set({ isRunning: false });
     }, timer * 1000);
   }
 
@@ -38,5 +47,6 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       clearTimeout(timeoutId);
       timeoutId = null;
     }
+    chrome.storage.local.set({ isRunning: false });
   }
 });
