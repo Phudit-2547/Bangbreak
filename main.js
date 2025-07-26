@@ -7,12 +7,9 @@ document.getElementById("startBtn").addEventListener("click", async () => {
   const timer = parseInt(document.getElementById("timer").value, 10);
   const action = document.getElementById("action").value;
   const customUrl = document.getElementById("customUrl").value;
-
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   const color = document.getElementById("colorPicker").value;
 
   chrome.runtime.sendMessage({
-    tabId: tab.id,
     timer,
     action,
     customUrl,
