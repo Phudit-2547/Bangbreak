@@ -73,6 +73,7 @@ let cancelBtn = document.getElementById("cancelBtn");
 startBtn.addEventListener("click", () => {
   const timerString = document.getElementById("timer").value;
   const timer = timeToSeconds(timerString);
+  console.log(timer)
 
   // Validate timer is greater than 0
   if (timer <= 0) {

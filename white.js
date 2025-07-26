@@ -1,10 +1,12 @@
+const DEFAULT_COLOR = "#ffffff";
+
 window.onload = function () {
   const params = new URLSearchParams(window.location.search);
-  const color = params.get("color") || "#ffffff";
+  const color = params.get("color") || DEFAULT_COLOR;
   const enableAnimation = params.get("animation") === "true";
 
   if (enableAnimation) {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       @keyframes colorSwitchAnimation {
         0% {
@@ -17,7 +19,8 @@ window.onload = function () {
     `;
     document.head.appendChild(style);
 
-    document.body.style.animation = 'colorSwitchAnimation 0.05s infinite alternate';
+    document.body.style.animation =
+      "colorSwitchAnimation 0.05s infinite alternate";
   } else {
     // Just set the static color without animation
     document.body.style.backgroundColor = color;
