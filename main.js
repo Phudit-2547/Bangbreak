@@ -1,8 +1,15 @@
+const predefinedUrls = [
+  "https://example.com",
+  "https://en.wikipedia.org/wiki/Special:Random",
+  "https://www.google.com/search?q=surprise",
+  "https://www.openai.com/",
+  "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+];
+
 document.addEventListener("DOMContentLoaded", () => {
   const actionSelect = document.getElementById("action");
   const colorPreset = document.getElementById("colorPreset");
   const colorPicker = document.getElementById("colorPicker");
-  const customUrlInput = document.getElementById("customUrl");
 
   // Update input visibility on dropdown change
   actionSelect.addEventListener("change", () => {
@@ -10,11 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (action === "blank") {
       colorPreset.style.display = "block";
       colorPicker.style.display = "block";
-      customUrlInput.style.display = "none";
     } else if (action === "custom") {
       colorPreset.style.display = "none";
       colorPicker.style.display = "none";
-      customUrlInput.style.display = "block";
     }
   });
 
@@ -34,15 +39,15 @@ let cancelBtn = document.getElementById("cancelBtn");
 startBtn.addEventListener("click", () => {
   const timer = parseInt(document.getElementById("timer").value, 10);
   const action = document.getElementById("action").value;
-  const customUrl = document.getElementById("customUrl").value;
   const color = document.getElementById("colorPicker").value;
   const enableAnimation = document.getElementById("enableAnimation").checked;
+  const randomUrl = predefinedUrls[Math.floor(Math.random() * predefinedUrls.length)];
 
   chrome.runtime.sendMessage({
     command: "start",
     timer,
     action,
-    customUrl,
+    customUrl: randomUrl,
     color,
     enableAnimation
   });
