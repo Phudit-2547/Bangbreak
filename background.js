@@ -1,7 +1,5 @@
-let timeoutId = null;
-
 function start(msg) {
-  const { timer, action, customUrl, color, enableAnimation } = msg;
+  const { timer, action, customUrl, color, enableAnimation, isAuto } = msg;
 
   if (timeoutId) clearTimeout(timeoutId);
 
@@ -13,7 +11,7 @@ function start(msg) {
     color,
   });
 
-  timeoutId = setTimeout(() => {
+  let timeoutId = setTimeout(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const tab = tabs[0];
       if (!tab || !tab.id) return;
@@ -42,6 +40,7 @@ function start(msg) {
 
     timeoutId = null;
     chrome.storage.local.set({ isRunning: false });
+    if (isAuto == true) start(msg)
   }, timer * 1000);
 }
 
@@ -63,3 +62,30 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       break;
   }
 });
+
+chrome.runtime.onStartup.addListener(() => {
+  let msg = {
+    command: "start",
+    timer: 10,
+    action: "blank",
+    customUrl: "https://example.com",
+    color: "#ff0000",
+    enableAnimation: true,
+    isAuto: true
+  }
+  start(msg);
+})
+
+
+chrome.runtime.onInstalled.addListener(() => {
+  let msg = {
+    command: "start",
+    timer: 10,
+    action: "blank",
+    customUrl: "https://example.com",
+    color: "#ff0000",
+    enableAnimation: true,
+    isAuto: true
+  }
+  start(msg)
+})
