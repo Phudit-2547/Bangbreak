@@ -13,7 +13,7 @@ window.onload = function () {
         100% {
           background-color: ${color};
         }
-      }
+      }  
     `;
     document.head.appendChild(style);
 
