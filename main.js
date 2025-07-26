@@ -1,4 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const actionSelect = document.getElementById("action");
+  const colorPreset = document.getElementById("colorPreset");
+  const colorPicker = document.getElementById("colorPicker");
+  const customUrlInput = document.getElementById("customUrl");
+
+  // Update input visibility on dropdown change
+  actionSelect.addEventListener("change", () => {
+    const action = actionSelect.value;
+    if (action === "blank") {
+      colorPreset.style.display = "block";
+      colorPicker.style.display = "block";
+      customUrlInput.style.display = "none";
+    } else if (action === "custom") {
+      colorPreset.style.display = "none";
+      colorPicker.style.display = "none";
+      customUrlInput.style.display = "block";
+    }
+  });
+
+  // Set correct visibility on popup load (if default isn't blank)
+  actionSelect.dispatchEvent(new Event("change"));
+
+  // Also check storage for timer status to update buttons
   chrome.storage.local.get("isRunning", (data) => {
     const running = data.isRunning === true;
     toggleButtons(running);
