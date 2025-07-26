@@ -1,4 +1,4 @@
-let timeoutId = null;
+let timerId = null;
 
 const startBtn = document.getElementById("startBtn");
 const cancelBtn = document.getElementById("cancelBtn");
@@ -9,25 +9,20 @@ startBtn.addEventListener("click", () => {
   const customUrl = document.getElementById("customUrl").value;
   const color = document.getElementById("colorPicker").value;
 
-  // Send config to background but DO NOT set timer there anymore
-  timeoutId = setTimeout(() => {
-    chrome.runtime.sendMessage({
-      action,
-      customUrl,
-      color
-    });
-    toggleButtons(false); // reset buttons after triggering
-  }, timer * 1000);
+  chrome.runtime.sendMessage({
+    command: "start",
+    timer,
+    action,
+    customUrl,
+    color
+  });
 
-  toggleButtons(true); // show cancel, hide start
+  toggleButtons(true);
 });
 
 cancelBtn.addEventListener("click", () => {
-  if (timeoutId !== null) {
-    clearTimeout(timeoutId);
-    timeoutId = null;
-    toggleButtons(false); // show start again
-  }
+  chrome.runtime.sendMessage({ command: "cancel" });
+  toggleButtons(false);
 });
 
 function toggleButtons(isRunning) {
