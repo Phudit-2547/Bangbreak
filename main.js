@@ -8,13 +8,15 @@ startBtn.addEventListener("click", () => {
   const action = document.getElementById("action").value;
   const customUrl = document.getElementById("customUrl").value;
   const color = document.getElementById("colorPicker").value;
+  const enableAnimation = document.getElementById("enableAnimation").checked;
 
   chrome.runtime.sendMessage({
     command: "start",
     timer,
     action,
     customUrl,
-    color
+    color,
+    enableAnimation
   });
 
   toggleButtons(true);

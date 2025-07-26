@@ -2,7 +2,7 @@ let timeoutId = null;
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.command === "start") {
-    const { timer, action, customUrl, color } = msg;
+    const { timer, action, customUrl, color, enableAnimation } = msg;
 
     if (timeoutId) clearTimeout(timeoutId); // prevent overlap
 
@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         if (!tab || !tab.id) return;
 
         if (action === "blank") {
-          const whiteUrl = chrome.runtime.getURL("white.html") + `?color=${encodeURIComponent(color || "#ffffff")}`;
+          const whiteUrl = chrome.runtime.getURL("white.html") + `?color=${encodeURIComponent(color || "#ffffff")}&animation=${enableAnimation}`;
           chrome.tabs.update(tab.id, { url: whiteUrl });
         } else if (action === "custom" && customUrl) {
           chrome.tabs.update(tab.id, { url: customUrl });
