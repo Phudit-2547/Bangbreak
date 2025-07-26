@@ -1,0 +1,26 @@
+body {
+  font-family: sans-serif;
+  padding: 10px;
+  width: 220px;
+}
+
+.preset-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.preset {
+  width: 40px;
+  height: 40px;
+  border: 1px solid gray;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+input,
+button {
+  width: 50%;
+  margin-top: 5px;
+  height: 20px;
+}
