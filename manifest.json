@@ -1,5 +1,23 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
+  "name": "BangBreak",
   "version": "1.0",
-  "name": "Test"
+  "description": "Best eye care extension that will help save you from a painful eye strain.",
+  "permissions": ["tabs", "storage"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["white.html", "white.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+  "48": "extension_icon_48.png",
+  "96": "extension_icon_96.png"
+}
 }
