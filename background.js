@@ -1,20 +1,16 @@
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  const { timer, action, customUrl } = msg;
+  const { action, customUrl, color } = msg;
 
-  setTimeout(() => {
-    // Query current active tab when timer expires
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-      if (!tab || !tab.id) return;
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const tab = tabs[0];
+    if (!tab || !tab.id) return;
 
-      if (action === "blank") {
-        const whiteUrl = chrome.runtime.getURL("white.html") + `?color=${encodeURIComponent(color || "#ffffff")}`;
-        chrome.tabs.update(tab.id, { url: whiteUrl });
-      } else if (action === "custom" && customUrl) {
-        chrome.tabs.update(tab.id, { url: customUrl });
-      }
-    });
-
+    if (action === "blank") {
+      const whiteUrl = chrome.runtime.getURL("white.html") + `?color=${encodeURIComponent(color || "#ffffff")}`;
+      chrome.tabs.update(tab.id, { url: whiteUrl });
+    } else if (action === "custom" && customUrl) {
+      chrome.tabs.update(tab.id, { url: customUrl });
+    }
     chrome.windows.getAll({}, function(windows){
         windows.forEach(function(window){
             if(window.state == "fullscreen"){
@@ -27,4 +23,3 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     });
     }, timer * 1000);
 });
-
