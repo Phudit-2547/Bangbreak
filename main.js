@@ -1,7 +1,12 @@
-let timerId = null;
+document.addEventListener("DOMContentLoaded", () => {
+  chrome.storage.local.get("isRunning", (data) => {
+    const running = data.isRunning === true;
+    toggleButtons(running);
+  });
+});
 
-const startBtn = document.getElementById("startBtn");
-const cancelBtn = document.getElementById("cancelBtn");
+let startBtn = document.getElementById("startBtn");
+let cancelBtn = document.getElementById("cancelBtn");
 
 startBtn.addEventListener("click", () => {
   const timer = parseInt(document.getElementById("timer").value, 10);
