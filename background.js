@@ -1,5 +1,5 @@
 const DEFAULT_SETTINGS = {
-  isAutoEnabled: false,
+  isAutoEnabled: true, // :D
 };
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
