@@ -47,19 +47,21 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 chrome.runtime.onStartup.addListener(() => {
   chrome.alarms.create("bangbreakTimerAuto", {
     delayInMinutes: 1, // Minutes
+    periodInMinutes: 1 // Repeat every 1 minute
   });
 });
 
-// chrome.runtime.onInstalled.addListener(() => {
-//   chrome.alarms.create("bangbreakTimerAuto", {
-//     delayInMinutes: 1 // Minutes
-//   });
-// });
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.alarms.create("bangbreakTimerAuto", {
+    delayInMinutes: 1, // Minutes
+    periodInMinutes: 1 // Repeat every 1 minute
+  });
+});
 
 // Listen for alarm events
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === "bangbreakTimerAuto") {
-    executeTimerAuto();
+    executeTimer();
   }
 });
 
@@ -67,41 +69,6 @@ var timeoutId = null;
 
 // Common function to execute when timer expires
 function executeTimer() {
-  chrome.storage.local.get(
-    ["action", "customUrl", "color", "enableAnimation"],
-    (data) => {
-      const { action, customUrl, color, enableAnimation } = data;
-
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        const tab = tabs[0];
-        if (!tab || !tab.id) return;
-
-        if (action === "blank") {
-          const whiteUrl =
-            chrome.runtime.getURL("white.html") +
-            `?color=${encodeURIComponent(
-              color || "#ffffff"
-            )}&animation=${enableAnimation}`;
-          chrome.tabs.update(tab.id, { url: whiteUrl });
-        } else if (action === "custom" && customUrl) {
-          chrome.tabs.update(tab.id, { url: customUrl });
-        }
-
-        chrome.windows.getAll({}, function (windows) {
-          windows.forEach(function (window) {
-            if (window.state != "fullscreen") {
-              chrome.windows.update(window.id, { state: "fullscreen" });
-            }
-          });
-        });
-      });
-
-      chrome.storage.local.set({ isRunning: false });
-    }
-  );
-}
-
-function executeTimerAuto() {
   chrome.storage.local.get(
     ["action", "customUrl", "color", "enableAnimation"],
     (data) => {
