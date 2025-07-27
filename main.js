@@ -65,6 +65,19 @@ document.addEventListener("DOMContentLoaded", () => {
       value.substring(4, 6);
     e.target.value = formatted;
   });
+
+  const enableAutoInput = document.getElementById("enableAuto");
+  chrome.storage.local.get("settings", ({ settings }) => {
+    enableAutoInput.checked = settings["isAutoEnabled"];
+  });
+  enableAutoInput.addEventListener("change", () => {
+    chrome.storage.local.get("settings", ({ settings }) => {
+      settings["isAutoEnabled"] = enableAutoInput.checked;
+      chrome.storage.local.set({
+        settings: settings,
+      });
+    });
+  });
 });
 
 // Function to convert HH:MM:SS to total seconds

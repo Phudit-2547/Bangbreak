@@ -1,3 +1,7 @@
+const DEFAULT_SETTINGS = {
+  isAutoEnabled: false,
+};
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   switch (msg.command) {
     case "start":
@@ -47,21 +51,28 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 chrome.runtime.onStartup.addListener(() => {
   chrome.alarms.create("bangbreakTimerAuto", {
     delayInMinutes: 1, // Minutes
-    periodInMinutes: 1 // Repeat every 1 minute
+    periodInMinutes: 1, // Repeat every 1 minute
   });
 });
 
 chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.local.set({
+    settings: DEFAULT_SETTINGS,
+  });
   chrome.alarms.create("bangbreakTimerAuto", {
     delayInMinutes: 1, // Minutes
-    periodInMinutes: 1 // Repeat every 1 minute
+    periodInMinutes: 1, // Repeat every 1 minute
   });
 });
 
 // Listen for alarm events
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === "bangbreakTimerAuto") {
-    executeTimer();
+    chrome.storage.local.get(["settings"], ({ settings }) => {
+      if (settings["isAutoEnabled"]) {
+        executeTimer();
+      }
+    });
   }
 });
 
