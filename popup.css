@@ -121,7 +121,8 @@ label {
 
 .timer-button-group {
   display: inline-flex;
-  gap: 8px;
+  gap: 4px;
+  margin-left: 9px;
   margin-bottom: 10px;
   vertical-align: middle;
 }
