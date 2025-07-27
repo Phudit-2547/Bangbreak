@@ -47,10 +47,10 @@ const AUDIO_FILES = [
 ];
 ```
 
-## ⚠️ Hackathon Warning
+## ⚠️ Warning
 
-This extension literally flashbangs your screen. Don't use if you have epilepsy or hate being productive! 😅
+This extension literally flashbangs your screen. Don't use if you have epilepsy or hate being productive! 
 
 ---
 
-**Stop coding. Touch grass. Save your eyes! 👀✨**
+**Stop coding. Touch grass. Save your eyes! 👀✨** 
