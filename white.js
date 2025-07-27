@@ -1,14 +1,26 @@
 const DEFAULT_COLOR = "#ffffff";
 
+// Array of available audio files
+const AUDIO_FILES = [
+  "audio/maiwaileaw.mp3",
+  "audio/trump_rest.mp3"
+];
+
+// Function to get a random audio file
+function getRandomAudioFile() {
+  const randomIndex = Math.floor(Math.random() * AUDIO_FILES.length);
+  return AUDIO_FILES[randomIndex];
+}
+
 window.onload = function () {
-  // Load audio on startup
-  const audio = new Audio("audio/maiwaileaw.mp3");
-  audio.play();
+  // Load audio on startup with random selection
+  const randomAudioFile = getRandomAudioFile();
+  const audio = new Audio(randomAudioFile);
   audio.preload = "auto";
-  
-  // Optional: You can play the audio immediately or store it for later use
-  // audio.play().catch(e => console.log("Audio play failed:", e));
-  
+
+  // Play the randomly selected audio
+  audio.play().catch((e) => console.log("Audio play failed:", e));
+
   const params = new URLSearchParams(window.location.search);
   const color = params.get("color") || DEFAULT_COLOR;
   const enableAnimation = params.get("animation") === "true";
