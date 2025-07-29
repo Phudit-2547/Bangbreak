@@ -2,7 +2,7 @@
 
 **Rest your eyes with a _flashbang_ :D**
 
-A Chrome extension that forces you to take eye breaks with customizable visual flashbangs and random audio alerts. Perfect for hackathon developers who forget to blink!
+A Chrome extension that forces you to take eye breaks with customizable visual flashbangs and random audio alerts. Perfect for developers who forget to blink!
 
 ## 🚀 Installation
 
